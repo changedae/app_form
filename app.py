@@ -5,6 +5,8 @@ import sqlite3
 import datetime
 import pandas as pd
 import os.path
+from st_aggrid import GridOptionsBuilder, AgGrid, \
+                GridUpdateMode, DataReturnMode
 
 
 file_path = os.path.dirname(__file__)
@@ -40,4 +42,28 @@ with st.form("my_form", clear_on_submit=True):
 st.subheader('회원목록')
 
 df = pd.read_sql('select * from users',con)
-st.dataframe(df)
+# st.dataframe(df)
+
+gb=GridOptionsBuilder.from_dataframe(df)
+gb.configure_default_column(editable=True, groupable=True)
+#Add pagiation
+gb.configure_pagination(paginationAutoPageSize=True)
+gb.configure_side_bar()
+gb.configure_selection(selection_mode='multiple',
+                       use_checkbox=True,
+                       groupSelectsChildren="Group checkbox select children")
+gridOptions = gb.build()
+
+grid_response = AgGrid(data=df,
+                       gridOptions=gridOptions,
+                       data_return_mode='AS_INPUT',
+                       update_mode='MODEL_CHANGED',
+                       fit_columns_on_grid_load=False,
+                       theme='blue',
+                       enable_enterprise_modules=True,
+                       height=350,
+                       reload_data=False)
+data = grid_response['data']
+selected = grid_response['selected_rows']
+df = pd.DataFrame(selected)
+st.write(df)
