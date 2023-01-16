@@ -14,4 +14,10 @@ with st.form("my_form", clear_on_submit=True):
    submitted = st.form_submit_button('제출')
 
    if submitted:
+      if len(uid) < 6:
+           st.warning('input least 6 characters')
+           st.stop()
+      if uPw != uPwChk:
+           st.warning('password inconsisted')
+
       st.success('제출됨')
