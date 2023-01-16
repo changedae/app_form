@@ -6,6 +6,7 @@ import datetime
 import pandas as pd
 import os.path
 
+
 file_path = os.path.dirname(__file__)
 db_file = os.path.join(file_path, 'database.db')
 con = sqlite3.connect(db_file)
