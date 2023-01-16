@@ -3,11 +3,13 @@ from datetime import datetime
 import streamlit as st
 import sqlite3
 import datetime
+import pandas as pd
+
 
 con = sqlite3.connect('database.db')
 cur = con.cursor()
 tNm = 'users'
-
+st.subheader('회원가입 폼')
 with st.form("my_form", clear_on_submit=True):
    st.info('다음 양식을 모두 작성후 제출합니다.')
    uId=st.text_input('아이디',max_chars=12)
@@ -31,3 +33,8 @@ with st.form("my_form", clear_on_submit=True):
       cur.execute(f"insert into users(uid,uname,pswd,brth,gndr) "
                   f" values('{uId}','{uName}','{uPw}','{uBirth}','{uGender}')")
       con.commit()
+
+ st.subheader('회원목록')
+
+df = pd.read_sql('select * from users',con)
+st.dataframe(df)
