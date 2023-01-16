@@ -34,7 +34,7 @@ with st.form("my_form", clear_on_submit=True):
                   f" values('{uId}','{uName}','{uPw}','{uBirth}','{uGender}')")
       con.commit()
 
- st.subheader('회원목록')
+st.subheader('회원목록')
 
 df = pd.read_sql('select * from users',con)
 st.dataframe(df)
