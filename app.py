@@ -89,5 +89,14 @@ elif menu == '로그인':
 
         if login_btn:
             res = cur.execute(f"select * from users where uid='{id}'")
-            row = res.fetchall()
-            st.write(row)
+            row = res.fetchone()
+            #t.write(row)
+            if row is None:
+              st.warning('존재하지 않은 아이디입니다.')
+              st.stop()
+            pw_chk = row[3]
+            if pw_chk != pw_chk:
+               st.warning('invalid password')
+               st.stop()
+
+            st.session_state.login =True
