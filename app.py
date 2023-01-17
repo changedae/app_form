@@ -81,22 +81,28 @@ elif menu == '회원목록':
             st.experimental_rerun()
 elif menu == '로그인':
     st.subheader('로그인')
+    if session_state.login is None:
+        with st.form("login_form"):
+            id = st.text_input('아이디', max_chars=12)
+            pw = st.text_input('비밀번호', type='password')
+            login_btn = st.form_submit_button('로그인')
 
-    with st.form("login_form"):
-        id = st.text_input('아이디', max_chars=12)
-        pw = st.text_input('비밀번호', type='password')
-        login_btn = st.form_submit_button('로그인')
-
-        if login_btn:
-            res = cur.execute(f"select * from users where uid='{id}'")
-            row = res.fetchone()
-            #t.write(row)
-            if row is None:
-              st.warning('존재하지 않은 아이디입니다.')
-              st.stop()
-            pw_chk = row[3]
-            if pw_chk != pw_chk:
-               st.warning('invalid password')
-               st.stop()
-
-            st.session_state.login =True
+            if login_btn:
+                res = cur.execute(f"select * from users where uid='{id}'")
+                row = res.fetchone()
+                #t.write(row)
+                if row is None:
+                  st.warning('존재하지 않은 아이디입니다.')
+                  st.stop()
+                pw_chk = row[3]
+                if pw_chk != pw_chk:
+                   st.warning('invalid password')
+                   st.stop()
+                st.success('로그인 성공 했습니다.')
+                st.session_state['login'] =True
+                st.session_state['uid']= id
+                st.experimental_rerun()
+    else:
+        res = cur.execute(f"select * from users where uid='{st.session_state.uid}'")
+        row = res.fetchone()
+        st.table(row)
