@@ -58,7 +58,6 @@ grid_response = AgGrid(data=df,
                        data_return_mode='AS_INPUT',
                        update_mode='MODEL_CHANGED',
                        fit_columns_on_grid_load=False,
-                       theme='blue',
                        enable_enterprise_modules=True,
                        height=350,
                        reload_data=False)
