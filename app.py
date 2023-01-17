@@ -42,7 +42,7 @@ if menu == '회원가입':
                       f" values('{uId}','{uName}','{uPw}','{uBirth}','{uGender}')")
           con.commit()
 
-elif menu = '회원목록':
+elif menu == '회원목록':
     st.subheader('회원목록')
 
     df = pd.read_sql('select * from users',con)
@@ -87,4 +87,7 @@ elif menu == '로그인':
         pw = st.text_input('비밀번호', type='password')
         login_btn = st.form_submit_button('로그인')
 
-
+        if login_btn:
+            res = cur.execute(f"select * from users where uid='{id}'")
+            row = res.fetchall()
+            st.write(row)
