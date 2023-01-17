@@ -5,8 +5,7 @@ import sqlite3
 import datetime
 import pandas as pd
 import os.path
-from st_aggrid import GridOptionsBuilder, AgGrid, \
-                GridUpdateMode, DataReturnMode
+from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 
 
 file_path = os.path.dirname(__file__)
