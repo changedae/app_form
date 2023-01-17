@@ -81,7 +81,7 @@ elif menu == '회원목록':
             st.experimental_rerun()
 elif menu == '로그인':
     st.subheader('로그인')
-    if 'login' not in st.session_state or st.session_state.login = False :
+    if 'login' not in st.session_state or st.session_state.login == False :
         with st.form("login_form"):
             id = st.text_input('아이디', max_chars=12)
             pw = st.text_input('비밀번호', type='password')
