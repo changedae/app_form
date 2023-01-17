@@ -5,8 +5,7 @@ import sqlite3
 import datetime
 import pandas as pd
 import os.path
-from st_aggrid import GridOptionsBuilder, AgGrid, \
-                GridUpdateMode, DataReturnMode
+from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
 
 
 file_path = os.path.dirname(__file__)
@@ -65,5 +64,12 @@ grid_response = AgGrid(data=df,
                        reload_data=False)
 data = grid_response['data']
 selected = grid_response['selected_rows']
-df = pd.DataFrame(selected)
-st.write(df)
+
+if selected:
+    updateBtn = st.button('수정')
+
+    if updateBtn:
+        for row in selected:
+            cur.execute(f"update users set uname='{row['uname']}' where no={row['no']}")
+        con.commit()
+        st.success('성명을 수정하였습니다')
