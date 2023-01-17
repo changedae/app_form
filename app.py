@@ -106,3 +106,10 @@ elif menu == '로그인':
         res = cur.execute(f"select * from users where uid='{st.session_state.uid}'")
         row = res.fetchone()
         st.write(row)
+
+        logout_btn = st.button('logout')
+        if logout_btn:
+            del st.session_state.login
+            del st.session_state.uid
+            st.experimental_rerun()
+
